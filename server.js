@@ -103,10 +103,10 @@ app.post('/produtos', (req, res) => {
 });
 
 app.post('/clientes', (req, res) => {
-  if (req.body.hasOwnProperty('nome') && req.body.hasOwnProperty('sobrenome')) {
-    const { nome, sobrenome } = req.body;
+  if (req.body.hasOwnProperty('name') && req.body.hasOwnProperty('sobrenome')) {
+    const { name, sobrenome } = req.body;
 
-    Cliente.create( { nome, sobrenome } )
+    Cliente.create( { name, sobrenome } )
       .then((cliente) => {
         res.json(cliente);
       })
@@ -121,7 +121,7 @@ app.post('/clientes', (req, res) => {
 
 app.get('/clientes', (req , res) => {
   Cliente.findAll({
-    attributes: [ 'nome', 'sobrenome' ]
+    attributes: [ 'name', 'sobrenome' ]
   })
     .then((clientes) => {
       res.json(clientes);
@@ -131,10 +131,10 @@ app.get('/clientes', (req , res) => {
 })
 
 app.put('/clientes', (req , res) => {
-  const { id, nome, sobrenome } = req.body;
+  const { id, name, sobrenome } = req.body;
   const parametros = {};
 
-  if (nome) parametros.nome = nome;
+  if (name) parametros.name = name;
   if (sobrenome) parametros.sobrenome = sobrenome;
 
   Cliente.update(parametros, {
