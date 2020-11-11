@@ -6,8 +6,10 @@ module.exports = (sequelize, DataTypes) => {
     preco: DataTypes.FLOAT
   }, {});
   Produto.associate = function(models) {
+    // belongto = pertnece a
     Produto.Fabricante = Produto.belongsTo(models.Fabricante, {
       foreignKey: 'fabricanteId',
+      onDelete: 'CASCADE',
       as: 'fabricante'
     });
   };

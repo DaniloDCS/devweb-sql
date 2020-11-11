@@ -69,7 +69,7 @@ app.put('/produtos', (req, res) => {
 
 app.get('/produtos', (req, res) => {
   Produto.findAll({
-    attributes: [ 'nome', 'codigo', 'preco' ]
+    attributes: ['id', 'nome', 'codigo', 'preco', 'fabricanteId' ]
   })
     .then((produtos) => {
       res.json(produtos);
@@ -77,6 +77,7 @@ app.get('/produtos', (req, res) => {
       res.json(err);
     })
 });
+
 
 app.post('/produtos', (req, res) => {
   if (req.body.hasOwnProperty('nome') && 
@@ -185,6 +186,33 @@ app.get('/fabricantes', (req, res) => {
       res.json(err);
     })
 });
+
+app.get('/fabricantes/:id', (req, res) => {
+  const id = parseInt(req.params.id , 10);
+
+  Fabricante.findOne({
+    where: {id}
+  })
+    .then((fabricantes) => {
+      res.json(fabricantes);
+    }).catch((err) => {
+      res.json(err);
+    })
+});
+
+app.delete('/fabricantes/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10)
+  
+  Fabricante.destroy({
+    where: {id}
+  })
+    .then((fabricantes) => {
+      res.json(fabricantes);
+    }).catch((err) => {
+      res.json({"msg": "Fabricante não encontrado! :( ", "err": err});
+    })
+});
+
 
 models.sequelize.sync().then(() => {
   app.listen(PORT, () => {
